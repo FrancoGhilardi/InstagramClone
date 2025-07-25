@@ -19,7 +19,13 @@ const PostCard: React.FC<Props> = ({ post }) => {
     <View style={[styles.card, { backgroundColor: colors.surface }]}>
       <PostHeader avatar={avatar} name={name} location={location} />
       <Image source={{ uri: image }} style={styles.image} />
-      <PostActions liked={liked} likes={likes} comments={comments} />
+      <PostActions
+        liked={post.liked}
+        likes={post.likes}
+        comments={post.comments}
+        post={post}
+      />
+
       <Typography>{description}</Typography>
     </View>
   );
