@@ -6,6 +6,7 @@ import { fetchPosts } from "../redux/postsSlice";
 import { Typography } from "../../../ui/atoms/Typography";
 import { styles } from "./styles/PostListScreen-styles";
 import { FeedLayout } from "../templates/FeedLayout";
+import { setInitialLikes } from "../redux/postActionSlice";
 
 export const PostListScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,9 @@ export const PostListScreen: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchPosts());
+    if (posts.length > 0) {
+      dispatch(setInitialLikes(posts));
+    }
   }, [dispatch]);
 
   if (loading) return <ActivityIndicator style={styles.loader} />;

@@ -1,11 +1,17 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton } from "../../atoms/IconButton";
 import { Typography } from "../../../../ui/atoms/Typography";
 import { addSavedPost, removeSavedPost } from "../../redux/savedPostsSlice";
 import { RootState } from "../../../../core/store/store";
 import { Post } from "../../../../domain/models/Post";
+import {
+  selectIsPostLiked,
+  selectLikesForPost,
+  toggleLike,
+} from "../../redux/postActionSlice";
+import { styles } from "./styles";
 
 type Props = {
   liked: boolean;
@@ -21,6 +27,12 @@ export const PostActions: React.FC<Props> = ({
   post,
 }) => {
   const dispatch = useDispatch();
+  const isLiked = useSelector((state: RootState) =>
+    selectIsPostLiked(state, post.id)
+  );
+  const likesCount = useSelector((state: RootState) =>
+    selectLikesForPost(state, post.id)
+  );
   const savedPosts = useSelector((state: RootState) => state.savedPosts.posts);
   const isSaved = savedPosts.some((p) => p.id === post.id);
 
@@ -32,12 +44,16 @@ export const PostActions: React.FC<Props> = ({
     }
   };
 
+  const toggleLikeAction = () => {
+    dispatch(toggleLike({ post }));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.actions}>
         <IconButton
-          icon={liked ? "heart-filled" : "heart"}
-          onPress={() => {}}
+          icon={isLiked ? "heart-filled" : "heart"}
+          onPress={toggleLikeAction}
           size={26}
         />
         <IconButton icon="comment" onPress={() => {}} />
@@ -51,13 +67,8 @@ export const PostActions: React.FC<Props> = ({
         </View>
       </View>
       <Typography variant="subtitle">
-        {likes} Likes • {comments} Comments
+        {likesCount ?? post.likes} Likes • {post.comments} Comments
       </Typography>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { padding: 8 },
-  actions: { flexDirection: "row", alignItems: "center", marginBottom: 4 },
-});

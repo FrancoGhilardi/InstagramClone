@@ -5,4 +5,10 @@ export const styles = StyleSheet.create({
   content: {
     paddingBottom: Spacing.xl,
   },
+  loader: {
+    padding: 16,
+  },
+  endList: {
+    height: 40,
+  },
 });
