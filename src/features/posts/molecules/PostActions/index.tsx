@@ -1,8 +1,8 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { styles } from "./styles";
-import { IconButton } from "../../atoms/IconButton";
+import { View } from "react-native";
 import { Typography } from "../../../../ui/atoms/Typography";
+import { IconButton } from "../../atoms/IconButton";
+import { styles } from "./styles";
 
 type Props = {
   liked: boolean;
@@ -10,23 +10,20 @@ type Props = {
   comments: number;
 };
 
-export const PostActions = ({ liked, likes, comments }: Props) => {
-  const likeIcon = liked
-    ? "https://cdn-icons-png.flaticon.com/512/833/833472.png"
-    : "https://cdn-icons-png.flaticon.com/512/1077/1077035.png";
-
+export const PostActions: React.FC<Props> = ({ liked, likes, comments }) => {
   return (
     <View style={styles.container}>
       <View style={styles.actions}>
-        <IconButton icon={likeIcon} onPress={() => {}} />
         <IconButton
-          icon="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
+          icon={liked ? "heart-filled" : "heart"}
           onPress={() => {}}
+          size={26}
         />
-        <IconButton
-          icon="https://cdn-icons-png.flaticon.com/512/25/25663.png"
-          onPress={() => {}}
-        />
+        <IconButton icon="comment" onPress={() => {}} />
+        <IconButton icon="share" onPress={() => {}} />
+        <View style={{ flex: 1, alignItems: "flex-end" }}>
+          <IconButton icon="bookmark" onPress={() => {}} />
+        </View>
       </View>
       <Typography variant="subtitle">
         {likes} Likes • {comments} Comments

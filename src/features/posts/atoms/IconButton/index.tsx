@@ -1,26 +1,25 @@
 import React from "react";
-import { TouchableOpacity, Image, ImageStyle, StyleSheet } from "react-native";
-import { styles } from "./styles";
+import { TouchableOpacity, ViewStyle } from "react-native";
+import { Icon } from "../../../../ui/atoms/Icon/Icon";
 
 type IconButtonProps = {
-  icon: string;
+  icon: keyof typeof import("../../../../ui/atoms/Icon/Icon").iconMap;
   onPress: () => void;
   size?: number;
-  style?: ImageStyle;
+  color?: string;
+  style?: ViewStyle;
 };
 
-export const IconButton = ({
+export const IconButton: React.FC<IconButtonProps> = ({
   icon,
   onPress,
   size = 24,
+  color,
   style,
-}: IconButtonProps) => {
+}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Image
-        source={{ uri: icon }}
-        style={[{ width: size, height: size }, style]}
-      />
+    <TouchableOpacity onPress={onPress} style={style}>
+      <Icon name={icon} size={size} color={color} />
     </TouchableOpacity>
   );
 };
