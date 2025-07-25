@@ -1,6 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
 import { useAppTheme } from "../ui/providers/ThemeProvider";
 import { SavedPostsScreen } from "../features/posts/pages/SavedPostScreen";
 import { Icon } from "../ui/atoms/Icon/Icon";
@@ -10,10 +14,13 @@ import { SettingsScreen } from "../features/settings/pages/SettingsScreen";
 const Tab = createBottomTabNavigator();
 
 export const AppNavigator: React.FC = () => {
-  const { colors } = useAppTheme();
+  const { colors, theme } = useAppTheme();
+
+  const navTheme = theme === "dark" ? DarkTheme : DefaultTheme;
+  navTheme.colors.background = colors.background;
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navTheme}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {

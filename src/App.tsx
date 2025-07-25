@@ -11,7 +11,7 @@ import {
 import { AppNavigator } from "./navigation/AppNavigator";
 
 const AppContent: React.FC = () => {
-  const { scheme, colors } = useAppTheme();
+  const { theme, colors } = useAppTheme();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const AppContent: React.FC = () => {
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar
-        barStyle={scheme === "dark" ? "light-content" : "dark-content"}
+        barStyle={theme === "dark" ? "light-content" : "dark-content"}
       />
       <AppNavigator />
     </View>
