@@ -1,26 +1,21 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post } from "../../../domain/models/Post";
 import { PostsRepositoryImpl } from "../../../data/repositories/postsRepositoryImpl";
+import { PostsStorage } from "../../../core/storage/postStorage";
 
 type PostsState = {
   posts: Post[];
   loading: boolean;
   error: string | null;
-  refreshing: boolean;
-  page: number;
-  hasMore: boolean;
 };
 
 const initialState: PostsState = {
   posts: [],
   loading: false,
   error: null,
-  refreshing: false,
-  page: 1,
-  hasMore: true,
 };
 
-// Fetch inicial
+// Cargar posts desde API
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (_, { rejectWithValue }) => {
@@ -33,14 +28,13 @@ export const fetchPosts = createAsyncThunk(
   }
 );
 
-// Cargar más posts (paginación)
-export const fetchMorePosts = createAsyncThunk(
-  "posts/fetchMorePosts",
-  async (page: number, { rejectWithValue }) => {
+// Cargar estado persistido desde AsyncStorage
+export const loadPostsFromStorage = createAsyncThunk(
+  "posts/loadPostsFromStorage",
+  async (_, { rejectWithValue }) => {
     try {
-      const repo = new PostsRepositoryImpl();
-      const data = await repo.getPosts();
-      return data;
+      const localData = await PostsStorage.loadPosts();
+      return localData || [];
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -51,42 +45,44 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    startRefreshing: (state) => {
-      state.refreshing = true;
+    toggleLike: (state, action: PayloadAction<string>) => {
+      const post = state.posts.find((p) => p.id === action.payload);
+      if (post) {
+        post.liked = !post.liked;
+        post.likes += post.liked ? 1 : -1;
+      }
     },
-    stopRefreshing: (state) => {
-      state.refreshing = false;
+    toggleSave: (state, action: PayloadAction<string>) => {
+      const post = state.posts.find((p) => p.id === action.payload);
+      if (post) {
+        post.saved = !post.saved;
+      }
     },
   },
   extraReducers: (builder) => {
     builder
-      // Fetch inicial
       .addCase(fetchPosts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.loading = false;
-        state.posts = action.payload;
-        state.page = 1;
-        state.hasMore = true;
+        // Si no hay datos en AsyncStorage, usar los del JSON
+        if (state.posts.length === 0) {
+          state.posts = action.payload;
+        }
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-
-      // Fetch paginación
-      .addCase(fetchMorePosts.fulfilled, (state, action) => {
-        if (action.payload.length === 0) {
-          state.hasMore = false;
-        } else {
-          state.posts = [...state.posts, ...action.payload];
-          state.page += 1;
+      .addCase(loadPostsFromStorage.fulfilled, (state, action) => {
+        if (action.payload.length > 0) {
+          state.posts = action.payload;
         }
       });
   },
 });
 
-export const { startRefreshing, stopRefreshing } = postsSlice.actions;
+export const { toggleLike, toggleSave } = postsSlice.actions;
 export default postsSlice.reducer;
