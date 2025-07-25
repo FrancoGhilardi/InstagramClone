@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   FlatList,
   RefreshControl,
@@ -18,6 +18,8 @@ type Props = {
   hasMore: boolean;
 };
 
+const ITEM_HEIGHT = 500; //!AJUSTAR
+
 export const FeedLayout: React.FC<Props> = ({
   posts,
   refreshing,
@@ -27,11 +29,22 @@ export const FeedLayout: React.FC<Props> = ({
 }) => {
   const { colors } = useAppTheme();
 
+  const keyExtractor = useCallback((item: Post) => item.id, []);
+
+  const getItemLayout = useCallback((_: any, index: number) => {
+    return { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index };
+  }, []);
+
   return (
     <FlatList
       data={posts}
       renderItem={({ item }) => <PostCard post={item} />}
-      keyExtractor={(item) => item.id}
+      keyExtractor={keyExtractor}
+      getItemLayout={getItemLayout}
+      initialNumToRender={5}
+      maxToRenderPerBatch={5}
+      windowSize={7}
+      removeClippedSubviews
       contentContainerStyle={[
         { backgroundColor: colors.background },
         styles.content,

@@ -1,10 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import { Post } from "../../../../domain/models/Post";
-import { RootState } from "../../../../core/store/store";
 import { IconButton } from "../../atoms/IconButton";
-import { toggleLike, toggleSave } from "../../redux/postsSlice";
 import { Typography } from "../../../../ui/atoms/Typography";
 import { styles } from "./styles";
 import { usePosts } from "../../../../core/hooks/usePosts";
@@ -13,7 +10,7 @@ type Props = {
   post: Post;
 };
 
-export const PostActions: React.FC<Props> = ({ post }) => {
+const PostActions: React.FC<Props> = ({ post }) => {
   const { likePost, savePost } = usePosts();
 
   return (
@@ -40,3 +37,5 @@ export const PostActions: React.FC<Props> = ({ post }) => {
     </View>
   );
 };
+
+export default memo(PostActions);

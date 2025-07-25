@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { styles } from "./styles";
-import { Avatar } from "../../atoms/Avatar";
 import { Typography } from "../../../../ui/atoms/Typography";
+import Avatar from "../../atoms/Avatar";
 
 type Props = {
   avatar: string;
@@ -10,7 +10,8 @@ type Props = {
   location: string;
 };
 
-const PostHeader: React.FC<Props> = ({ avatar, name, location }: Props) => {
+const PostHeader: React.FC<Props> = ({ avatar, name, location }) => {
+  console.log({ avatar, name, location });
   return (
     <View style={styles.container}>
       <Avatar uri={avatar} />

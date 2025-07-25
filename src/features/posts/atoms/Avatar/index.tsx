@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Image, ImageStyle } from "react-native";
 import { styles } from "./styles";
 
@@ -8,11 +8,8 @@ type AvatarProps = {
   style?: ImageStyle;
 };
 
-export const Avatar: React.FC<AvatarProps> = ({
-  uri,
-  size = 40,
-  style,
-}: AvatarProps) => {
+const Avatar: React.FC<AvatarProps> = ({ uri, size = 40, style }) => {
+  console.log({ uri });
   return (
     <Image
       source={{ uri }}
@@ -24,3 +21,5 @@ export const Avatar: React.FC<AvatarProps> = ({
     />
   );
 };
+
+export default memo(Avatar);
