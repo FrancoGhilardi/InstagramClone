@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 import { ThemeProvider, useAppTheme } from "./ui/providers/ThemeProvider";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Provider, useDispatch } from "react-redux";
 import { AppDispatch, store } from "./core/store/store";
-import { PostListScreen } from "./features/posts/pages/PostListScreen";
 import {
   fetchPosts,
   loadPostsFromStorage,
 } from "./features/posts/redux/postsSlice";
+import { AppNavigator } from "./navigation/AppNavigator";
 
-const AppContent = () => {
+const AppContent: React.FC = () => {
   const { scheme, colors } = useAppTheme();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -23,21 +23,23 @@ const AppContent = () => {
   }, [dispatch]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: colors.background }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar
         barStyle={scheme === "dark" ? "light-content" : "dark-content"}
       />
-      <PostListScreen />
-    </SafeAreaView>
+      <AppNavigator />
+    </View>
   );
 };
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <AppContent />
-      </ThemeProvider>
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <AppContent />
+        </ThemeProvider>
+      </Provider>
+    </SafeAreaProvider>
   );
 }

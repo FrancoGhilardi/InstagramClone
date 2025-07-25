@@ -4,6 +4,7 @@ import { Typography } from "../../../ui/atoms/Typography";
 import { styles } from "./styles/SavedPostScreen-styles";
 import PostCard from "../organisms/PostCard";
 import { usePosts } from "../../../core/hooks/usePosts";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const SavedPostsScreen: React.FC = () => {
   const { savedPosts } = usePosts();
@@ -19,11 +20,13 @@ export const SavedPostsScreen: React.FC = () => {
   }
 
   return (
-    <FlatList
-      data={savedPosts}
-      renderItem={({ item }) => <PostCard post={item} />}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.list}
-    />
+    <SafeAreaView>
+      <FlatList
+        data={savedPosts}
+        renderItem={({ item }) => <PostCard post={item} />}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.list}
+      />
+    </SafeAreaView>
   );
 };
