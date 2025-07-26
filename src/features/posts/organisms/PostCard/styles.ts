@@ -4,8 +4,7 @@ import { Sizes } from "../../../../core/constants/sizes";
 
 export const styles = StyleSheet.create({
   card: {
-    marginBottom: Spacing.lg,
-    borderRadius: Sizes.radius.md,
+    paddingBottom: Spacing.lg,
     overflow: "hidden",
   },
   image: {

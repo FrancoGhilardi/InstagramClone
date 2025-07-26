@@ -6,7 +6,7 @@ type IconButtonProps = {
   icon: keyof typeof import("../../../../ui/atoms/Icon/Icon").iconMap;
   onPress: () => void;
   size?: number;
-  color?: string;
+  color: string;
   style?: ViewStyle;
 };
 

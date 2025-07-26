@@ -46,7 +46,10 @@ export const PostListScreen: React.FC = () => {
   if (error) return <Typography variant="title">Error: {error}</Typography>;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView
+      edges={["top", "left", "right"]}
+      style={{ backgroundColor: colors.background }}
+    >
       <FeedLayout
         posts={posts}
         refreshing={refreshing}

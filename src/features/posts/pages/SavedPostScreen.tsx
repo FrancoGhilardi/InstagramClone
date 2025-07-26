@@ -20,7 +20,7 @@ export const SavedPostsScreen: React.FC = () => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView edges={["top", "left", "right"]}>
       <FlatList
         data={savedPosts}
         renderItem={({ item }) => <PostCard post={item} />}

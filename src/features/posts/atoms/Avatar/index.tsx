@@ -9,7 +9,6 @@ type AvatarProps = {
 };
 
 const Avatar: React.FC<AvatarProps> = ({ uri, size = 40, style }) => {
-  console.log({ uri });
   return (
     <Image
       source={{ uri }}

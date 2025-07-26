@@ -11,7 +11,6 @@ type Props = {
 };
 
 const PostHeader: React.FC<Props> = ({ avatar, name, location }) => {
-  console.log({ avatar, name, location });
   return (
     <View style={styles.container}>
       <Avatar uri={avatar} />

@@ -23,17 +23,23 @@ export const AppNavigator: React.FC = () => {
     <NavigationContainer theme={navTheme}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ size, focused }) => {
             let iconName: keyof typeof import("../ui/atoms/Icon/Icon").iconMap;
 
-            if (route.name === "Home") iconName = "heart";
+            if (route.name === "Home") iconName = "home";
             else if (route.name === "Saved") iconName = "bookmark";
-            else iconName = "share";
+            else iconName = "settings";
 
-            return <Icon name={iconName} size={size} color={color} />;
+            return (
+              <Icon
+                name={iconName}
+                size={size}
+                color={focused ? colors.primary : colors.surface}
+              />
+            );
           },
-          tabBarActiveTintColor: colors.accent,
-          tabBarInactiveTintColor: colors.secondary,
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.surface,
           tabBarStyle: { backgroundColor: colors.surface },
           headerShown: false,
         })}
