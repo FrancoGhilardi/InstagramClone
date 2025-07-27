@@ -9,20 +9,19 @@ import {
   Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addComment,
-  deleteComment,
-  editComment,
-  makeSelectCommentsForPost,
-} from "../../redux/commentsSlice";
+import { makeSelectCommentsForPost } from "../../redux/commentsSlice";
 import { Input } from "../../atoms/Input";
 import { Button } from "../../atoms/Button";
-import { RootState } from "../../../../core/store/store";
+import { RootState, AppDispatch } from "../../../../core/store/store";
 import { styles } from "./styles";
 import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Typography } from "../../../../ui/atoms/Typography";
 import { CommentItem } from "../ComponentsItems";
+import { Comment } from "../../../../domain/models/Post";
+import { updateComment } from "../../../../domain/usescases/editComment";
+import { saveComment } from "../../../../domain/usescases/saveComment";
+import { removeComment } from "../../../../domain/usescases/deleteComment";
 
 type Props = {
   visible: boolean;
@@ -38,30 +37,27 @@ export const CommentsModal: React.FC<Props> = ({
   const [text, setText] = useState<string>("");
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const { colors } = useAppTheme();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const selectComments = useMemo(() => makeSelectCommentsForPost(), []);
   const comments = useSelector((state: RootState) =>
     selectComments(state, postId)
   );
 
-  const handleAddOrEditComment = () => {
+  const handleAddOrEditComment = async () => {
     if (!text.trim()) return;
+
     if (editingCommentId) {
-      dispatch(
-        editComment({ postId, commentId: editingCommentId, newText: text })
-      );
+      // Editar comentario existente
+      await updateComment(dispatch, postId, editingCommentId, text);
       setEditingCommentId(null);
     } else {
-      dispatch(
-        addComment({
-          postId,
-          comment: {
-            id: Date.now().toString(),
-            text,
-            createdAt: new Date().toISOString(),
-          },
-        })
-      );
+      // Agregar nuevo comentario
+      const newComment: Comment = {
+        id: Date.now().toString(),
+        text,
+        createdAt: new Date().toISOString(),
+      };
+      await saveComment(dispatch, postId, newComment);
     }
     setText("");
   };
@@ -77,7 +73,9 @@ export const CommentsModal: React.FC<Props> = ({
       {
         text: "Delete",
         style: "destructive",
-        onPress: () => dispatch(deleteComment({ postId, commentId })),
+        onPress: async () => {
+          await removeComment(dispatch, postId, commentId);
+        },
       },
     ]);
   };

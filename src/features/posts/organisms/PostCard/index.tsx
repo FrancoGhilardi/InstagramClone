@@ -12,13 +12,14 @@ import { useSelector } from "react-redux";
 import { makeSelectCommentsForPost } from "../../redux/commentsSlice";
 import { RootState } from "../../../../core/store/store";
 import { CommentsModal } from "../../molecules/CommentsModal";
+import { formatPostDate } from "../../../../core/utils/formatDate";
 
 type Props = {
   post: Post;
 };
 
 const PostCard: React.FC<Props> = ({ post }) => {
-  const { avatar, name, location, image, description } = post;
+  const { avatar, name, location, image, description, createdAt } = post;
   const { colors } = useAppTheme();
   const { uri: finalImage, onError } = useImageFallback(
     image,
@@ -26,13 +27,14 @@ const PostCard: React.FC<Props> = ({ post }) => {
   );
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  // Usamos el selector memoizado
   const selectComments = useMemo(() => makeSelectCommentsForPost(), []);
   const comments = useSelector((state: RootState) =>
     selectComments(state, post.id)
   );
 
   const lastComment = comments.length > 0 ? comments[0] : null;
+
+  const handleOpenModal = (open: boolean) => setModalVisible(open);
 
   return (
     <View style={[styles.card, { backgroundColor: colors.surface }]}>
@@ -42,7 +44,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
         style={styles.image}
         onError={onError}
       />
-      <PostActions post={post} />
+      <PostActions post={post} handleOpenModal={handleOpenModal} />
       <View style={styles.descriptionContainer}>
         <Typography variant="subtitle">{name}</Typography>
         <View style={styles.description}>
@@ -55,17 +57,20 @@ const PostCard: React.FC<Props> = ({ post }) => {
         )}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setModalVisible(true)}
+          onPress={() => handleOpenModal(true)}
         >
           <Typography variant="body" style={{ color: colors.primary }}>
             Add a comment
           </Typography>
         </TouchableOpacity>
       </View>
+      <View style={styles.date}>
+        <Typography variant="body">{formatPostDate(createdAt)}</Typography>
+      </View>
 
       <CommentsModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={() => handleOpenModal(false)}
         postId={post.id}
       />
     </View>

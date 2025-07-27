@@ -8,7 +8,7 @@ import {
 } from "../features/posts/redux/postsSlice";
 import { AppNavigator } from "./AppNavigator";
 import { useAppTheme } from "../ui/providers/ThemeProvider";
-import { hydrateState } from "../core/utils/hydrateAppState";
+import { hydrateAppState } from "../core/utils/hydrateAppState";
 import { styles } from "./styles.ts/RootNavigation-styles";
 
 export const RootNavigator: React.FC = () => {
@@ -18,7 +18,7 @@ export const RootNavigator: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      await hydrateState(dispatch);
+      await hydrateAppState(dispatch);
 
       const result = await dispatch(loadPostsFromStorage());
       if (result.payload?.length === 0) {

@@ -1,12 +1,16 @@
-import { setInitialState } from "../../features/posts/redux/commentsSlice";
-import { setInitialLikes } from "../../features/posts/redux/postActionSlice";
-import { loadFromStorage } from "../store/middleware/postPersistence";
 import { AppDispatch } from "../store/store";
+import { commentsRepository } from "../../data/repositories/commentsRepositoryImpl";
+import { setInitialLikes } from "../../features/posts/redux/postActionSlice";
+import { setInitialState as setCommentsInitialState } from "../../features/posts/redux/commentsSlice";
+import { loadFromStorage } from "../store/middleware/postPersistence";
 
-export const hydrateState = async (dispatch: AppDispatch) => {
-  const { postActions, comments } = await loadFromStorage();
-  if (postActions) dispatch(setInitialLikes(Object.values(postActions)));
+export const hydrateAppState = async (dispatch: AppDispatch) => {
+  const { postActions } = await loadFromStorage();
+  const comments = await commentsRepository.getComments();
+  if (postActions) {
+    dispatch(setInitialLikes(Object.values(postActions)));
+  }
   if (comments) {
-    dispatch(setInitialState(comments));
+    dispatch(setCommentsInitialState(comments));
   }
 };

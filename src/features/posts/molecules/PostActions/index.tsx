@@ -10,9 +10,10 @@ import { formatNumber } from "../../../../core/utils/format";
 
 type Props = {
   post: Post;
+  handleOpenModal: (open: boolean) => void;
 };
 
-const PostActions: React.FC<Props> = ({ post }) => {
+const PostActions: React.FC<Props> = ({ post, handleOpenModal }) => {
   const { likePost, savePost } = usePosts();
   const { colors } = useAppTheme();
 
@@ -35,7 +36,11 @@ const PostActions: React.FC<Props> = ({ post }) => {
             size={26}
             color={post.liked ? colors.accent : colors.border}
           />
-          <IconButton icon="comment" color={"#fff"} onPress={() => {}} />
+          <IconButton
+            icon="comment"
+            color={"#fff"}
+            onPress={() => handleOpenModal(true)}
+          />
           <IconButton icon="share" color={"#fff"} onPress={handleShare} />
         </View>
         <View style={{ flex: 1, alignItems: "flex-end" }}>
