@@ -27,7 +27,7 @@ export const fetchPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const repo = new PostsRepositoryImpl();
-      return await repo.getPosts(); // Devuelve la primera página de posts
+      return await repo.getPosts();
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -40,7 +40,6 @@ export const fetchMorePosts = createAsyncThunk(
   async (page: number, { rejectWithValue }) => {
     try {
       const repo = new PostsRepositoryImpl();
-      // Para un endpoint real, aquí se haría algo como repo.getPosts(page)
       return await repo.getPosts();
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -84,10 +83,21 @@ const postsSlice = createSlice({
     stopRefreshing: (state) => {
       state.refreshing = false;
     },
+    addComment: (
+      state,
+      action: PayloadAction<{ postId: string; comment: string }>
+    ) => {
+      const { postId, comment } = action.payload;
+      const post = state.posts.find((p) => p.id === postId);
+      if (post) {
+        if (!post.commentsList) post.commentsList = [];
+        post.commentsList.push(comment);
+        post.comments += 1;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
-      // fetchPosts
       .addCase(fetchPosts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -102,8 +112,6 @@ const postsSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-
-      // fetchMorePosts
       .addCase(fetchMorePosts.fulfilled, (state, action) => {
         if (action.payload.length === 0) {
           state.hasMore = false;
@@ -112,8 +120,6 @@ const postsSlice = createSlice({
           state.page += 1;
         }
       })
-
-      // loadPostsFromStorage
       .addCase(loadPostsFromStorage.fulfilled, (state, action) => {
         if (action.payload.length > 0) {
           state.posts = action.payload;
@@ -122,6 +128,11 @@ const postsSlice = createSlice({
   },
 });
 
-export const { toggleLike, toggleSave, startRefreshing, stopRefreshing } =
-  postsSlice.actions;
+export const {
+  toggleLike,
+  toggleSave,
+  startRefreshing,
+  stopRefreshing,
+  addComment,
+} = postsSlice.actions;
 export default postsSlice.reducer;

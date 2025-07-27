@@ -7,6 +7,7 @@ export interface Post {
   likes: number;
   image: string;
   comments: number;
+  commentsList?: string[];
   liked: boolean;
   saved: boolean;
   location: string;
