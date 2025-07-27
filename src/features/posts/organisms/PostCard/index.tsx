@@ -54,7 +54,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
           onPress={() => setModalVisible(true)}
         >
           <Typography variant="body" style={{ color: colors.primary }}>
-            Agregar un comentario
+            Add a comment
           </Typography>
         </TouchableOpacity>
       </View>

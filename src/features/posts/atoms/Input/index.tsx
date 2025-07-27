@@ -1,6 +1,7 @@
 import React from "react";
 import { TextInput, TextInputProps } from "react-native";
 import { styles } from "./styles";
+import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
 
 type Props = TextInputProps & {
   value: string;
@@ -8,12 +9,16 @@ type Props = TextInputProps & {
 };
 
 export const Input: React.FC<Props> = ({ value, onChangeText, ...rest }) => {
+  const { colors } = useAppTheme();
   return (
     <TextInput
-      style={styles.input}
+      style={[
+        styles.input,
+        { borderColor: colors.border, color: colors.primary },
+      ]}
       value={value}
       onChangeText={onChangeText}
-      placeholderTextColor="#999"
+      placeholderTextColor={colors.primary}
       {...rest}
     />
   );

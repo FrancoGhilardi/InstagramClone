@@ -7,11 +7,9 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   container: {
-    backgroundColor: "#fff",
     padding: 16,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    maxHeight: "70%",
   },
   header: {
     flexDirection: "row",
@@ -27,8 +25,8 @@ export const styles = StyleSheet.create({
     borderBottomColor: "#eee",
     borderBottomWidth: 1,
   },
-  commentText: {
-    color: "#333",
-    fontSize: 14,
+  safeArea: {
+    maxHeight: "70%",
+    minHeight: "20%",
   },
 });

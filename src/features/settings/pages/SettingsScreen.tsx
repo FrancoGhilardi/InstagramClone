@@ -17,7 +17,7 @@ export const SettingsScreen: React.FC = () => {
         variant="title"
         style={{ color: colors.primary, marginBottom: 20 }}
       >
-        Ajustes
+        Settings
       </Typography>
 
       <View style={styles.row}>
@@ -25,7 +25,7 @@ export const SettingsScreen: React.FC = () => {
           variant="body"
           style={{ color: colors.primary, marginRight: 10 }}
         >
-          Modo oscuro
+          Dark mode
         </Typography>
         <Switch
           value={theme === "dark"}

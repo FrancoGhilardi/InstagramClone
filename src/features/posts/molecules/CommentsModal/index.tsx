@@ -14,6 +14,9 @@ import { Input } from "../../atoms/Input";
 import { Button } from "../../atoms/Button";
 import { RootState } from "../../../../core/store/store";
 import { styles } from "./styles";
+import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Typography } from "../../../../ui/atoms/Typography";
 
 type Props = {
   visible: boolean;
@@ -26,7 +29,8 @@ export const CommentsModal: React.FC<Props> = ({
   onClose,
   postId,
 }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
+  const { colors } = useAppTheme();
   const dispatch = useDispatch();
   const comments = useSelector((state: RootState) =>
     selectCommentsForPost(state, postId)
@@ -50,34 +54,38 @@ export const CommentsModal: React.FC<Props> = ({
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        <SafeAreaView
+          style={[styles.safeArea, { backgroundColor: colors.background }]}
         >
-          <View style={styles.header}>
-            <TouchableOpacity onPress={onClose}>
-              <Text style={styles.closeText}>Cerrar</Text>
-            </TouchableOpacity>
-          </View>
+          <KeyboardAvoidingView
+            style={[styles.container, { backgroundColor: colors.background }]}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+          >
+            <View style={styles.header}>
+              <TouchableOpacity onPress={onClose}>
+                <Text style={styles.closeText}>Close</Text>
+              </TouchableOpacity>
+            </View>
 
-          <Input
-            value={text}
-            onChangeText={setText}
-            placeholder="Escribe un comentario..."
-          />
-          <Button title="Agregar" onPress={handleAddComment} />
+            <Input
+              value={text}
+              onChangeText={setText}
+              placeholder="Write a comment..."
+            />
+            <Button title="Add" onPress={handleAddComment} />
 
-          <FlatList
-            data={comments}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.commentContainer}>
-                <Text style={styles.commentText}>{item.text}</Text>
-              </View>
-            )}
-            inverted
-          />
-        </KeyboardAvoidingView>
+            <FlatList
+              data={comments}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.commentContainer}>
+                  <Typography variant="body">{item.text}</Typography>
+                </View>
+              )}
+              inverted
+            />
+          </KeyboardAvoidingView>
+        </SafeAreaView>
       </View>
     </Modal>
   );
