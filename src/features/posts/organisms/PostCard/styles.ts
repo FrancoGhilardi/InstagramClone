@@ -18,4 +18,11 @@ export const styles = StyleSheet.create({
   description: {
     paddingLeft: Spacing.sm,
   },
+  commentsContainer: {
+    paddingLeft: Spacing.sm,
+    paddingTop: Spacing.sm,
+  },
+  button: {
+    marginTop: Spacing.sm,
+  },
 });

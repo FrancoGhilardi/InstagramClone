@@ -7,7 +7,13 @@ export interface Post {
   likes: number;
   image: string;
   comments: number;
+  commentsList?: Comment[];
   liked: boolean;
   saved: boolean;
   location: string;
+}
+export interface Comment {
+  id: string;
+  text: string;
+  createdAt: string;
 }

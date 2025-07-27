@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { View, Image } from "react-native";
+import React, { memo, useState } from "react";
+import { View, Image, TouchableOpacity } from "react-native";
 import { Post } from "../../../../domain/models/Post";
 import { styles } from "./styles";
 import { Typography } from "../../../../ui/atoms/Typography";
@@ -8,6 +8,10 @@ import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
 import PostActions from "../../molecules/PostActions";
 import { useImageFallback } from "../../../../core/hooks/useImagesFallback";
 import { Placeholders } from "../../../../core/constants/placeholders";
+import { useSelector } from "react-redux";
+import { selectCommentsForPost } from "../../redux/commentsSlice";
+import { RootState } from "../../../../core/store/store";
+import { CommentsModal } from "../../molecules/CommentsModal";
 
 type Props = {
   post: Post;
@@ -20,6 +24,11 @@ const PostCard: React.FC<Props> = ({ post }) => {
     image,
     Placeholders.IMAGE
   );
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const comments = useSelector((state: RootState) =>
+    selectCommentsForPost(state, post.id)
+  );
+  const lastComment = comments.length > 0 ? comments[0] : null;
 
   return (
     <View style={[styles.card, { backgroundColor: colors.surface }]}>
@@ -36,6 +45,25 @@ const PostCard: React.FC<Props> = ({ post }) => {
           <Typography variant="body">{description}</Typography>
         </View>
       </View>
+      <View style={styles.commentsContainer}>
+        {lastComment && (
+          <Typography variant="body">{lastComment.text}</Typography>
+        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setModalVisible(true)}
+        >
+          <Typography variant="body" style={{ color: colors.primary }}>
+            Agregar un comentario
+          </Typography>
+        </TouchableOpacity>
+      </View>
+
+      <CommentsModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        postId={post.id}
+      />
     </View>
   );
 };
