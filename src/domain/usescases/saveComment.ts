@@ -13,10 +13,8 @@ export const saveComment = async (
   postId: string,
   comment: Comment
 ) => {
-  // 1. Agregar comentario al estado
   dispatch(addComment({ postId, comment }));
 
-  // 2. Persistir todos los comentarios
   const commentsState = (await commentsRepository.getComments()) || {};
   if (!commentsState[postId]) {
     commentsState[postId] = [];

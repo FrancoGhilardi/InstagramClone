@@ -28,7 +28,6 @@ const THEME_KEY = "APP_THEME";
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<ThemeType>("dark");
 
-  // Cargar el tema guardado en AsyncStorage al iniciar la app
   useEffect(() => {
     const loadTheme = async () => {
       const savedTheme = await AsyncStorage.getItem(THEME_KEY);
@@ -39,7 +38,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     loadTheme();
   }, []);
 
-  // Guardar tema cuando cambia
   const toggleTheme = async () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);

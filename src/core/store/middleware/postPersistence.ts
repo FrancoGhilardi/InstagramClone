@@ -6,13 +6,11 @@ export const postsPersistenceMiddleware: Middleware =
   (store) => (next) => async (action) => {
     const result = next(action);
 
-    // Guardar Posts
     if (action.type.startsWith("posts/")) {
       const state = store.getState();
       await AsyncStorage.setItem(Keys.POSTS_KEY, JSON.stringify(state.posts));
     }
 
-    // Guardar Saved Posts
     if (action.type.startsWith("savedPosts/")) {
       const state = store.getState();
       await AsyncStorage.setItem(
@@ -21,7 +19,6 @@ export const postsPersistenceMiddleware: Middleware =
       );
     }
 
-    // Guardar Likes y acciones
     if (action.type.startsWith("postActions/")) {
       const state = store.getState();
       await AsyncStorage.setItem(
@@ -30,7 +27,6 @@ export const postsPersistenceMiddleware: Middleware =
       );
     }
 
-    // Guardar Comentarios
     if (action.type.startsWith("comments/")) {
       const state = store.getState();
       await AsyncStorage.setItem(
@@ -42,7 +38,6 @@ export const postsPersistenceMiddleware: Middleware =
     return result;
   };
 
-// Funciones helper para cargar datos
 export const loadFromStorage = async () => {
   try {
     const [posts, savedPosts, postActions, comments] = await Promise.all([

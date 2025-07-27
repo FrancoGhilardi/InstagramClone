@@ -47,7 +47,7 @@ const commentsSlice = createSlice({
       state[action.payload.postId] = action.payload.comments;
     },
     setInitialState: (_, action: PayloadAction<Record<string, Comment[]>>) => {
-      return action.payload; // Reemplaza el estado actual por el del storage
+      return action.payload;
     },
   },
 });
@@ -60,9 +60,6 @@ export const {
   setInitialState,
 } = commentsSlice.actions;
 
-/**
- * Selector base para acceder al estado de comentarios
- */
 const selectCommentsState = (state: RootState) => state.comments;
 
 /**

@@ -1,6 +1,7 @@
 import React from "react";
-import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { styles } from "./styles";
+import { Typography } from "../../../../ui/atoms/Typography";
 
 type Props = TouchableOpacityProps & {
   title: string;
@@ -9,7 +10,7 @@ type Props = TouchableOpacityProps & {
 export const Button: React.FC<Props> = ({ title, ...rest }) => {
   return (
     <TouchableOpacity style={styles.button} {...rest}>
-      <Text style={styles.title}>{title}</Text>
+      <Typography style={styles.title}>{title}</Typography>
     </TouchableOpacity>
   );
 };

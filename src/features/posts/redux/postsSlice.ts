@@ -21,7 +21,6 @@ const initialState: PostsState = {
   hasMore: true,
 };
 
-// Cargar posts desde API (inicio)
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (_, { rejectWithValue }) => {
@@ -34,7 +33,6 @@ export const fetchPosts = createAsyncThunk(
   }
 );
 
-// Cargar más posts (paginación)
 export const fetchMorePosts = createAsyncThunk(
   "posts/fetchMorePosts",
   async (page: number, { rejectWithValue }) => {
@@ -47,7 +45,6 @@ export const fetchMorePosts = createAsyncThunk(
   }
 );
 
-// Cargar estado persistido desde AsyncStorage
 export const loadPostsFromStorage = createAsyncThunk(
   "posts/loadPostsFromStorage",
   async (_, { rejectWithValue }) => {

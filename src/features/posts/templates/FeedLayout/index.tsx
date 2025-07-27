@@ -18,7 +18,7 @@ type Props = {
   hasMore: boolean;
 };
 
-const ITEM_HEIGHT = 500; //!AJUSTAR
+const ITEM_HEIGHT = 500;
 
 export const FeedLayout: React.FC<Props> = ({
   posts,
