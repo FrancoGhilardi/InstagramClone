@@ -83,18 +83,6 @@ const postsSlice = createSlice({
     stopRefreshing: (state) => {
       state.refreshing = false;
     },
-    addComment: (
-      state,
-      action: PayloadAction<{ postId: string; comment: string }>
-    ) => {
-      const { postId, comment } = action.payload;
-      const post = state.posts.find((p) => p.id === postId);
-      if (post) {
-        if (!post.commentsList) post.commentsList = [];
-        post.commentsList.push(comment);
-        post.comments += 1;
-      }
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -128,11 +116,6 @@ const postsSlice = createSlice({
   },
 });
 
-export const {
-  toggleLike,
-  toggleSave,
-  startRefreshing,
-  stopRefreshing,
-  addComment,
-} = postsSlice.actions;
+export const { toggleLike, toggleSave, startRefreshing, stopRefreshing } =
+  postsSlice.actions;
 export default postsSlice.reducer;
