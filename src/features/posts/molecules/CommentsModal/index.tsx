@@ -72,10 +72,10 @@ export const CommentsModal: React.FC<Props> = ({
   };
 
   const handleDeletePress = (commentId: string) => {
-    Alert.alert("Eliminar comentario", "¿Seguro que deseas eliminarlo?", [
-      { text: "Cancelar", style: "cancel" },
+    Alert.alert("Delete comment", "Are you sure you want to delete it?", [
+      { text: "Cancel", style: "cancel" },
       {
-        text: "Eliminar",
+        text: "Delete",
         style: "destructive",
         onPress: () => dispatch(deleteComment({ postId, commentId })),
       },

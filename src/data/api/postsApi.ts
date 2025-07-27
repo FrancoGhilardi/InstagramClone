@@ -1,6 +1,6 @@
 import axios from "axios";
-import constants from "../../core/constants/constants";
+import { BASE_URL } from "@env";
 
 export const postsApi = axios.create({
-  baseURL: constants.BASE_URL,
+  baseURL: BASE_URL,
 });
