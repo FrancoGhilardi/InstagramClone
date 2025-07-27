@@ -27,6 +27,26 @@ export const styles = StyleSheet.create({
   },
   safeArea: {
     maxHeight: "70%",
-    minHeight: "20%",
+    minHeight: "25%",
+  },
+  commentRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1,
+  },
+  commentActions: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  editText: {
+    color: "#007bff",
+    fontSize: 13,
+  },
+  deleteText: {
+    color: "red",
+    fontSize: 13,
   },
 });

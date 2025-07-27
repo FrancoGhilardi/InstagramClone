@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useMemo } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
 import { Post } from "../../../../domain/models/Post";
 import { styles } from "./styles";
@@ -9,7 +9,7 @@ import PostActions from "../../molecules/PostActions";
 import { useImageFallback } from "../../../../core/hooks/useImagesFallback";
 import { Placeholders } from "../../../../core/constants/placeholders";
 import { useSelector } from "react-redux";
-import { selectCommentsForPost } from "../../redux/commentsSlice";
+import { makeSelectCommentsForPost } from "../../redux/commentsSlice";
 import { RootState } from "../../../../core/store/store";
 import { CommentsModal } from "../../molecules/CommentsModal";
 
@@ -25,9 +25,13 @@ const PostCard: React.FC<Props> = ({ post }) => {
     Placeholders.IMAGE
   );
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  // Usamos el selector memoizado
+  const selectComments = useMemo(() => makeSelectCommentsForPost(), []);
   const comments = useSelector((state: RootState) =>
-    selectCommentsForPost(state, post.id)
+    selectComments(state, post.id)
   );
+
   const lastComment = comments.length > 0 ? comments[0] : null;
 
   return (

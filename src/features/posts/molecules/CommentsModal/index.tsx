@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Modal,
   View,
   FlatList,
-  Text,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment, selectCommentsForPost } from "../../redux/commentsSlice";
+import {
+  addComment,
+  deleteComment,
+  editComment,
+  makeSelectCommentsForPost,
+} from "../../redux/commentsSlice";
 import { Input } from "../../atoms/Input";
 import { Button } from "../../atoms/Button";
 import { RootState } from "../../../../core/store/store";
@@ -17,6 +22,7 @@ import { styles } from "./styles";
 import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Typography } from "../../../../ui/atoms/Typography";
+import { CommentItem } from "../ComponentsItems";
 
 type Props = {
   visible: boolean;
@@ -30,25 +36,50 @@ export const CommentsModal: React.FC<Props> = ({
   postId,
 }) => {
   const [text, setText] = useState<string>("");
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const { colors } = useAppTheme();
   const dispatch = useDispatch();
+  const selectComments = useMemo(() => makeSelectCommentsForPost(), []);
   const comments = useSelector((state: RootState) =>
-    selectCommentsForPost(state, postId)
+    selectComments(state, postId)
   );
 
-  const handleAddComment = () => {
+  const handleAddOrEditComment = () => {
     if (!text.trim()) return;
-    dispatch(
-      addComment({
-        postId,
-        comment: {
-          id: Date.now().toString(),
-          text,
-          createdAt: new Date().toISOString(),
-        },
-      })
-    );
+    if (editingCommentId) {
+      dispatch(
+        editComment({ postId, commentId: editingCommentId, newText: text })
+      );
+      setEditingCommentId(null);
+    } else {
+      dispatch(
+        addComment({
+          postId,
+          comment: {
+            id: Date.now().toString(),
+            text,
+            createdAt: new Date().toISOString(),
+          },
+        })
+      );
+    }
     setText("");
+  };
+
+  const handleEditPress = (commentId: string, currentText: string) => {
+    setEditingCommentId(commentId);
+    setText(currentText);
+  };
+
+  const handleDeletePress = (commentId: string) => {
+    Alert.alert("Eliminar comentario", "¿Seguro que deseas eliminarlo?", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Eliminar",
+        style: "destructive",
+        onPress: () => dispatch(deleteComment({ postId, commentId })),
+      },
+    ]);
   };
 
   return (
@@ -63,24 +94,32 @@ export const CommentsModal: React.FC<Props> = ({
           >
             <View style={styles.header}>
               <TouchableOpacity onPress={onClose}>
-                <Text style={styles.closeText}>Close</Text>
+                <Typography style={styles.closeText}>Close</Typography>
               </TouchableOpacity>
             </View>
-
             <Input
               value={text}
               onChangeText={setText}
-              placeholder="Write a comment..."
+              placeholder={
+                editingCommentId
+                  ? "Edita tu comentario..."
+                  : "Escribe un comentario..."
+              }
             />
-            <Button title="Add" onPress={handleAddComment} />
+            <Button
+              title={editingCommentId ? "Guardar" : "Agregar"}
+              onPress={handleAddOrEditComment}
+            />
 
             <FlatList
               data={comments}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <View style={styles.commentContainer}>
-                  <Typography variant="body">{item.text}</Typography>
-                </View>
+                <CommentItem
+                  text={item.text}
+                  onEdit={() => handleEditPress(item.id, item.text)}
+                  onDelete={() => handleDeletePress(item.id)}
+                />
               )}
               inverted
             />
