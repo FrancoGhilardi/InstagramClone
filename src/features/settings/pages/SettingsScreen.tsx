@@ -30,7 +30,7 @@ export const SettingsScreen: React.FC = () => {
         <Switch
           value={theme === "dark"}
           onValueChange={toggleTheme}
-          trackColor={{ false: "#ccc", true: colors.accent }}
+          trackColor={{ false: "#ccc", true: colors.secondary }}
           thumbColor={theme === "dark" ? colors.primary : "#f4f3f4"}
         />
       </View>

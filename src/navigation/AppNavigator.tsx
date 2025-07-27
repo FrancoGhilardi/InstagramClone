@@ -39,7 +39,7 @@ export const AppNavigator: React.FC = () => {
             );
           },
           tabBarActiveTintColor: colors.primary,
-          tabBarInactiveTintColor: colors.surface,
+          tabBarInactiveTintColor: colors.secondary,
           tabBarStyle: { backgroundColor: colors.surface },
           headerShown: false,
         })}
