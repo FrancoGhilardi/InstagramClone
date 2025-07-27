@@ -6,7 +6,6 @@ import { createSelector } from "reselect";
 type CommentsState = Record<string, Comment[]>;
 
 const initialState: CommentsState = {};
-
 const commentsSlice = createSlice({
   name: "comments",
   initialState,
@@ -47,11 +46,19 @@ const commentsSlice = createSlice({
     ) => {
       state[action.payload.postId] = action.payload.comments;
     },
+    setInitialState: (_, action: PayloadAction<Record<string, Comment[]>>) => {
+      return action.payload; // Reemplaza el estado actual por el del storage
+    },
   },
 });
 
-export const { addComment, editComment, deleteComment, setComments } =
-  commentsSlice.actions;
+export const {
+  addComment,
+  editComment,
+  deleteComment,
+  setComments,
+  setInitialState,
+} = commentsSlice.actions;
 
 /**
  * Selector base para acceder al estado de comentarios

@@ -20,7 +20,6 @@ export const styles = StyleSheet.create({
   },
   commentsContainer: {
     paddingLeft: Spacing.sm,
-    paddingTop: Spacing.sm,
   },
   button: {
     marginTop: Spacing.sm,

@@ -101,13 +101,11 @@ export const CommentsModal: React.FC<Props> = ({
               value={text}
               onChangeText={setText}
               placeholder={
-                editingCommentId
-                  ? "Edita tu comentario..."
-                  : "Escribe un comentario..."
+                editingCommentId ? "Edit your comment..." : "Write a comment..."
               }
             />
             <Button
-              title={editingCommentId ? "Guardar" : "Agregar"}
+              title={editingCommentId ? "Save" : "Add"}
               onPress={handleAddOrEditComment}
             />
 
