@@ -6,6 +6,8 @@ import { Typography } from "../../../../ui/atoms/Typography";
 import PostHeader from "../../molecules/PostHeader";
 import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
 import PostActions from "../../molecules/PostActions";
+import { useImageFallback } from "../../../../core/hooks/useImagesFallback";
+import { Placeholders } from "../../../../core/constants/placeholders";
 
 type Props = {
   post: Post;
@@ -14,13 +16,26 @@ type Props = {
 const PostCard: React.FC<Props> = ({ post }) => {
   const { avatar, name, location, image, description } = post;
   const { colors } = useAppTheme();
+  const { uri: finalImage, onError } = useImageFallback(
+    image,
+    Placeholders.IMAGE
+  );
 
   return (
     <View style={[styles.card, { backgroundColor: colors.surface }]}>
       <PostHeader avatar={avatar} name={name} location={location} />
-      <Image source={{ uri: image }} style={styles.image} />
+      <Image
+        source={{ uri: finalImage }}
+        style={styles.image}
+        onError={onError}
+      />
       <PostActions post={post} />
-      <Typography>{description}</Typography>
+      <View style={styles.descriptionContainer}>
+        <Typography variant="subtitle">{name}</Typography>
+        <View style={styles.description}>
+          <Typography variant="body">{description}</Typography>
+        </View>
+      </View>
     </View>
   );
 };

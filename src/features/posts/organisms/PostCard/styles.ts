@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import { Spacing } from "../../../../core/constants/spacing";
-import { Sizes } from "../../../../core/constants/sizes";
 
 export const styles = StyleSheet.create({
   card: {
@@ -9,6 +8,14 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 300,
+    height: 400,
+  },
+  descriptionContainer: {
+    paddingLeft: Spacing.sm,
+    flexDirection: "row",
+    alignItems: "flex-end",
+  },
+  description: {
+    paddingLeft: Spacing.sm,
   },
 });
