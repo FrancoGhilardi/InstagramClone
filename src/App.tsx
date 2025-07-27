@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StatusBar, View } from "react-native";
 import { ThemeProvider, useAppTheme } from "./ui/providers/ThemeProvider";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider, useDispatch } from "react-redux";
 import { AppDispatch, store } from "./core/store/store";
 import {
