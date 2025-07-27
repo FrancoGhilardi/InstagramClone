@@ -7,4 +7,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 4,
   },
+  icons: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "25%",
+  },
 });

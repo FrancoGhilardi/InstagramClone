@@ -1,11 +1,12 @@
 import React, { memo } from "react";
-import { View } from "react-native";
+import { Share, View } from "react-native";
 import { Post } from "../../../../domain/models/Post";
 import { IconButton } from "../../atoms/IconButton";
 import { Typography } from "../../../../ui/atoms/Typography";
 import { styles } from "./styles";
 import { usePosts } from "../../../../core/hooks/usePosts";
 import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
+import { formatNumber } from "../../../../core/utils/format";
 
 type Props = {
   post: Post;
@@ -13,19 +14,30 @@ type Props = {
 
 const PostActions: React.FC<Props> = ({ post }) => {
   const { likePost, savePost } = usePosts();
-  const { colors, theme } = useAppTheme();
+  const { colors } = useAppTheme();
+
+  const handleShare = async () => {
+    try {
+      const message = `${post.name} - ${post.description}\n${post.image}`;
+      await Share.share({ message });
+    } catch (error) {
+      console.error("Error al compartir:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.actions}>
-        <IconButton
-          icon={post.liked ? "heart" : "heart-filled"}
-          onPress={() => likePost(post.id)}
-          size={26}
-          color={post.liked ? colors.accent : colors.border}
-        />
-        <IconButton icon="comment" color={"#fff"} onPress={() => {}} />
-        <IconButton icon="share" color={"#fff"} onPress={() => {}} />
+        <View style={styles.icons}>
+          <IconButton
+            icon={post.liked ? "heart" : "heart-filled"}
+            onPress={() => likePost(post.id)}
+            size={26}
+            color={post.liked ? colors.accent : colors.border}
+          />
+          <IconButton icon="comment" color={"#fff"} onPress={() => {}} />
+          <IconButton icon="share" color={"#fff"} onPress={handleShare} />
+        </View>
         <View style={{ flex: 1, alignItems: "flex-end" }}>
           <IconButton
             icon="bookmark"
@@ -35,7 +47,8 @@ const PostActions: React.FC<Props> = ({ post }) => {
         </View>
       </View>
       <Typography variant="subtitle">
-        {post.likes} Likes • {post.comments} Comments
+        {formatNumber(post.likes)} Likes • {formatNumber(post.comments)}{" "}
+        Comments
       </Typography>
     </View>
   );
