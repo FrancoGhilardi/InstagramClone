@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { Image, ImageStyle } from "react-native";
 import { styles } from "./styles";
-import { useImageFallback } from "../../../../core/hooks/useImagesFallback";
-import { Placeholders } from "../../../../core/constants/placeholders";
+import { useImageFallback } from "@core/hooks/useImagesFallback";
+import { Placeholders } from "@core/constants/placeholders";
 
 type AvatarProps = {
   uri: string;

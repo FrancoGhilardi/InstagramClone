@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Post } from "../../domain/models/Post";
+import { Post } from "@domain/models/Post";
 import { Keys } from "../constants/keys";
 
 export const PostsStorage = {

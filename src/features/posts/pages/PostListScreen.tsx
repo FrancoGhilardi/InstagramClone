@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
-import { Typography } from "../../../ui/atoms/Typography";
 import { styles } from "./styles/PostListScreen-styles";
-import { FeedLayout } from "../templates/FeedLayout";
-import { usePosts } from "../../../core/hooks/usePosts";
+import { usePosts } from "@core/hooks/usePosts";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAppTheme } from "../../../ui/providers/ThemeProvider";
+import { useAppTheme } from "@ui/providers/ThemeProvider";
+import { FeedLayout } from "../templates";
+import { Typography } from "@src/ui/atoms";
 
 export const PostListScreen: React.FC = () => {
   const {

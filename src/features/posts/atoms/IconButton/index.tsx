@@ -1,16 +1,16 @@
-import React from "react";
+import { Icon } from "@src/ui/atoms";
+import React, { memo } from "react";
 import { TouchableOpacity, ViewStyle } from "react-native";
-import { Icon } from "../../../../ui/atoms/Icon/Icon";
 
 type IconButtonProps = {
-  icon: keyof typeof import("../../../../ui/atoms/Icon/Icon").iconMap;
+  icon: keyof typeof import("@src/ui/atoms/Icon").iconMap;
   onPress: () => void;
   size?: number;
   color: string;
   style?: ViewStyle;
 };
 
-export const IconButton: React.FC<IconButtonProps> = ({
+const IconButton: React.FC<IconButtonProps> = ({
   icon,
   onPress,
   size = 24,
@@ -23,3 +23,5 @@ export const IconButton: React.FC<IconButtonProps> = ({
     </TouchableOpacity>
   );
 };
+
+export default memo(IconButton);

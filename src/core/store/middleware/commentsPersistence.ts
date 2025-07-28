@@ -1,5 +1,5 @@
 import { Middleware } from "@reduxjs/toolkit";
-import { commentsRepository } from "../../../data/repositories/commentsRepositoryImpl";
+import { commentsRepository } from "@data/repositories/commentsRepositoryImpl";
 
 export const commentsPersistenceMiddleware: Middleware =
   (store) => (next) => (action) => {

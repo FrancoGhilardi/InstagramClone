@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import { Share, View } from "react-native";
-import { Post } from "../../../../domain/models/Post";
-import { IconButton } from "../../atoms/IconButton";
-import { Typography } from "../../../../ui/atoms/Typography";
+import { Post } from "@domain/models/Post";
 import { styles } from "./styles";
-import { usePosts } from "../../../../core/hooks/usePosts";
-import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
-import { formatNumber } from "../../../../core/utils/format";
+import { usePosts } from "@core/hooks/usePosts";
+import { useAppTheme } from "@ui/providers/ThemeProvider";
+import { formatNumber } from "@core/utils/format";
+import { IconButton } from "../../atoms";
+import { Typography } from "@src/ui/atoms";
 
 type Props = {
   post: Post;

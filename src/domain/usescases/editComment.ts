@@ -1,6 +1,6 @@
-import { AppDispatch } from "../../core/store/store";
-import { commentsRepository } from "../../data/repositories/commentsRepositoryImpl";
-import { editComment } from "../../features/posts/redux/commentsSlice";
+import { AppDispatch } from "@core/store/store";
+import { commentsRepository } from "@data/repositories/commentsRepositoryImpl";
+import { editComment } from "@features/posts/redux/commentsSlice";
 
 /**
  * Caso de uso para editar un comentario y persistirlo.

@@ -7,7 +7,7 @@ import React, {
   useMemo,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Colors } from "../../core/constants/colors";
+import { Colors } from "@core/constants/colors";
 
 type ThemeType = "light" | "dark";
 

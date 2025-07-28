@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../../core/store/store";
-import { Comment } from "../../../domain/models/Post";
+import { RootState } from "@core/store/store";
+import { Comment } from "@domain/models/Post";
 import { createSelector } from "reselect";
 
 type CommentsState = Record<string, Comment[]>;

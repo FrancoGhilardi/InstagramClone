@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Comment } from "../../domain/models/Post";
-import { ICommentsRepository } from "../../domain/repositories/ICommentsRepository";
-import { Keys } from "../../core/constants/keys";
+import { Comment } from "@domain/models/Post";
+import { ICommentsRepository } from "@domain/repositories/ICommentsRepository";
+import { Keys } from "@core/constants/keys";
 
 export class CommentsRepositoryImpl implements ICommentsRepository {
   private readonly COMMENTS_KEY = Keys.COMMENTS_KEY;

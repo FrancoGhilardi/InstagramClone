@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import savedPostsReducer from "../../features/posts/redux/savedPostsSlice";
-import postsReducer from "../../features/posts/redux/postsSlice";
-import postActionsReducer from "../../features/posts/redux/postActionSlice";
-import commentsReducer from "../../features/posts/redux/commentsSlice";
 import { postsPersistenceMiddleware } from "./middleware/postPersistence";
+import {
+  commentsReducer,
+  postActionsReducer,
+  postsReducer,
+  savedPostsReducer,
+} from "@src/features/posts/redux";
 
 export const store = configureStore({
   reducer: {

@@ -6,12 +6,12 @@ import {
   fetchPosts,
   loadPostsFromStorage,
 } from "../features/posts/redux/postsSlice";
-import { AppNavigator } from "./AppNavigator";
 import { useAppTheme } from "../ui/providers/ThemeProvider";
 import { hydrateAppState } from "../core/utils/hydrateAppState";
 import { styles } from "./styles.ts/RootNavigation-styles";
+import AppNavigator from "./AppNavigator";
 
-export const RootNavigator: React.FC = () => {
+const RootNavigator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
   const { colors } = useAppTheme();
@@ -43,3 +43,5 @@ export const RootNavigator: React.FC = () => {
 
   return <AppNavigator />;
 };
+
+export default RootNavigator;

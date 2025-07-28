@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Typography } from "../../../../ui/atoms/Typography";
 import { styles } from "./styles";
+import { Typography } from "@src/ui/atoms";
 
 type Props = {
   text: string;
@@ -9,7 +9,7 @@ type Props = {
   onDelete: () => void;
 };
 
-export const CommentItem: React.FC<Props> = ({ text, onEdit, onDelete }) => {
+const CommentItem: React.FC<Props> = ({ text, onEdit, onDelete }) => {
   return (
     <View style={styles.commentRow}>
       <Typography variant="body">{text}</Typography>
@@ -24,3 +24,5 @@ export const CommentItem: React.FC<Props> = ({ text, onEdit, onDelete }) => {
     </View>
   );
 };
+
+export default CommentItem;

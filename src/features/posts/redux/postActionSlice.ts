@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Post } from "../../../domain/models/Post";
-import { RootState } from "../../../core/store/store";
+import { Post } from "@domain/models/Post";
+import { RootState } from "@core/store/store";
 
 type PostsActionsState = {
   likedPosts: Record<string, boolean>;

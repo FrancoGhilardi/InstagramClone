@@ -1,18 +1,16 @@
 import React, { memo, useState, useMemo } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
-import { Post } from "../../../../domain/models/Post";
+import { Post } from "@domain/models/Post";
 import { styles } from "./styles";
-import { Typography } from "../../../../ui/atoms/Typography";
-import PostHeader from "../../molecules/PostHeader";
-import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
-import PostActions from "../../molecules/PostActions";
-import { useImageFallback } from "../../../../core/hooks/useImagesFallback";
-import { Placeholders } from "../../../../core/constants/placeholders";
+import { useAppTheme } from "@ui/providers/ThemeProvider";
+import { useImageFallback } from "@core/hooks/useImagesFallback";
+import { Placeholders } from "@core/constants/placeholders";
 import { useSelector } from "react-redux";
 import { makeSelectCommentsForPost } from "../../redux/commentsSlice";
-import { RootState } from "../../../../core/store/store";
-import { CommentsModal } from "../../molecules/CommentsModal";
-import { formatPostDate } from "../../../../core/utils/formatDate";
+import { RootState } from "@core/store/store";
+import { formatPostDate } from "@core/utils/formatDate";
+import { CommentsModal, PostActions, PostHeader } from "../../molecules";
+import { Typography } from "@src/ui/atoms";
 
 type Props = {
   post: Post;

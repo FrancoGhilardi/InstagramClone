@@ -1,10 +1,10 @@
 import React from "react";
 import { View, FlatList } from "react-native";
-import { Typography } from "../../../ui/atoms/Typography";
 import { styles } from "./styles/SavedPostScreen-styles";
-import PostCard from "../organisms/PostCard";
-import { usePosts } from "../../../core/hooks/usePosts";
+import { usePosts } from "@core/hooks/usePosts";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { PostCard } from "../organisms";
+import { Typography } from "@src/ui/atoms";
 
 export const SavedPostsScreen: React.FC = () => {
   const { savedPosts } = usePosts();

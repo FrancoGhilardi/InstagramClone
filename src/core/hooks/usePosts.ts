@@ -7,7 +7,7 @@ import {
   toggleSave,
   startRefreshing,
   stopRefreshing,
-} from "../../features/posts/redux/postsSlice";
+} from "@features/posts/redux/postsSlice";
 
 export const usePosts = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -7,13 +7,13 @@ import {
 } from "@react-navigation/native";
 import { useAppTheme } from "../ui/providers/ThemeProvider";
 import { SavedPostsScreen } from "../features/posts/pages/SavedPostScreen";
-import { Icon } from "../ui/atoms/Icon/Icon";
 import { PostListScreen } from "../features/posts/pages/PostListScreen";
-import { SettingsScreen } from "../features/settings/pages/SettingsScreen";
+import SettingsScreen from "@src/features/settings/pages/SettingsScreen";
+import { Icon } from "@src/ui/atoms";
 
 const Tab = createBottomTabNavigator();
 
-export const AppNavigator: React.FC = () => {
+const AppNavigator: React.FC = () => {
   const { colors, theme } = useAppTheme();
 
   const navTheme = theme === "dark" ? DarkTheme : DefaultTheme;
@@ -24,7 +24,7 @@ export const AppNavigator: React.FC = () => {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ size, focused }) => {
-            let iconName: keyof typeof import("../ui/atoms/Icon/Icon").iconMap;
+            let iconName: keyof typeof import("../ui/atoms/Icon").iconMap;
 
             if (route.name === "Home") iconName = "home";
             else if (route.name === "Saved") iconName = "bookmark";
@@ -51,3 +51,5 @@ export const AppNavigator: React.FC = () => {
     </NavigationContainer>
   );
 };
+
+export default AppNavigator;

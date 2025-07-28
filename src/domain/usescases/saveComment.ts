@@ -1,7 +1,7 @@
-import { AppDispatch } from "../../core/store/store";
+import { AppDispatch } from "@core/store/store";
 import { Comment } from "../models/Post";
-import { commentsRepository } from "../../data/repositories/commentsRepositoryImpl";
-import { addComment } from "../../features/posts/redux/commentsSlice";
+import { commentsRepository } from "@data/repositories/commentsRepositoryImpl";
+import { addComment } from "@features/posts/redux/commentsSlice";
 
 /**
  * Caso de uso para agregar un comentario a un post.

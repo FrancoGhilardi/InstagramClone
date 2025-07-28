@@ -10,18 +10,17 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { makeSelectCommentsForPost } from "../../redux/commentsSlice";
-import { Input } from "../../atoms/Input";
-import { Button } from "../../atoms/Button";
-import { RootState, AppDispatch } from "../../../../core/store/store";
+import { RootState, AppDispatch } from "@core/store/store";
 import { styles } from "./styles";
-import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
+import { useAppTheme } from "@ui/providers/ThemeProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Typography } from "../../../../ui/atoms/Typography";
-import { CommentItem } from "../ComponentsItems";
-import { Comment } from "../../../../domain/models/Post";
-import { updateComment } from "../../../../domain/usescases/editComment";
-import { saveComment } from "../../../../domain/usescases/saveComment";
-import { removeComment } from "../../../../domain/usescases/deleteComment";
+import { Comment } from "@domain/models/Post";
+import { updateComment } from "@domain/usescases/editComment";
+import { saveComment } from "@domain/usescases/saveComment";
+import { removeComment } from "@domain/usescases/deleteComment";
+import { Button, Input } from "../../atoms";
+import CommentItem from "../ComponentsItems";
+import { Typography } from "@src/ui/atoms";
 
 type Props = {
   visible: boolean;
@@ -29,11 +28,7 @@ type Props = {
   postId: string;
 };
 
-export const CommentsModal: React.FC<Props> = ({
-  visible,
-  onClose,
-  postId,
-}) => {
+const CommentsModal: React.FC<Props> = ({ visible, onClose, postId }) => {
   const [text, setText] = useState<string>("");
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const { colors } = useAppTheme();
@@ -47,11 +42,9 @@ export const CommentsModal: React.FC<Props> = ({
     if (!text.trim()) return;
 
     if (editingCommentId) {
-      // Editar comentario existente
       await updateComment(dispatch, postId, editingCommentId, text);
       setEditingCommentId(null);
     } else {
-      // Agregar nuevo comentario
       const newComment: Comment = {
         id: Date.now().toString(),
         text,
@@ -125,3 +118,5 @@ export const CommentsModal: React.FC<Props> = ({
     </Modal>
   );
 };
+
+export default CommentsModal;

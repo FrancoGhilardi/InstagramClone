@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Post } from "../../../domain/models/Post";
-import { PostsRepositoryImpl } from "../../../data/repositories/postsRepositoryImpl";
-import { PostsStorage } from "../../../core/storage/postStorage";
+import { Post } from "@domain/models/Post";
+import { PostsRepositoryImpl } from "@data/repositories/postsRepositoryImpl";
+import { PostsStorage } from "@core/storage/postStorage";
 
 type PostsState = {
   posts: Post[];

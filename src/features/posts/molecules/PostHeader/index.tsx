@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { styles } from "./styles";
-import { Typography } from "../../../../ui/atoms/Typography";
-import Avatar from "../../atoms/Avatar";
+import { Avatar } from "../../atoms";
+import { Typography } from "@src/ui/atoms";
 
 type Props = {
   avatar: string;

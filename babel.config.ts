@@ -10,6 +10,24 @@ module.exports = function (api) {
           path: ".env",
         },
       ],
+      [
+        "module-resolver",
+        {
+          root: ["./"],
+          extensions: [".ts", ".tsx", ".js", ".json"],
+          alias: {
+            "@src": "./src",
+            "@core": "./src/core",
+            "@data": "./src/data",
+            "@domain": "./src/domain",
+            "@features": "./src/features",
+            "@ui": "./src/ui",
+            "@navigation": "./src/navigation",
+            "@assets": "./src/assets",
+            "@types": "./src/@types",
+          },
+        },
+      ],
     ],
   };
 };

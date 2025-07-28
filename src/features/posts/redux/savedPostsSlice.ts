@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Post } from "../../../domain/models/Post";
+import { Post } from "@domain/models/Post";
 
 type SavedPostsState = {
   posts: Post[];

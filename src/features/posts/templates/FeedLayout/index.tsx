@@ -6,9 +6,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { styles } from "./styles";
-import PostCard from "../../organisms/PostCard";
-import { Post } from "../../../../domain/models/Post";
-import { useAppTheme } from "../../../../ui/providers/ThemeProvider";
+import { Post } from "@domain/models/Post";
+import { useAppTheme } from "@ui/providers/ThemeProvider";
+import { PostCard } from "../../organisms";
 
 type Props = {
   posts: Post[];
@@ -20,7 +20,7 @@ type Props = {
 
 const ITEM_HEIGHT = 500;
 
-export const FeedLayout: React.FC<Props> = ({
+const FeedLayout: React.FC<Props> = ({
   posts,
   refreshing,
   onRefresh,
@@ -65,3 +65,5 @@ export const FeedLayout: React.FC<Props> = ({
     />
   );
 };
+
+export default FeedLayout;

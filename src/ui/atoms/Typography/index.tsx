@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, TextProps } from "react-native";
-import { TypographyStyles } from "../../../core/constants/typography";
+import { TypographyStyles } from "@core/constants/typography";
 import { useAppTheme } from "../../providers/ThemeProvider";
 
 type TypographyProps = TextProps & { variant?: "title" | "subtitle" | "body" };
 
-export const Typography = ({
+const Typography: React.FC<TypographyProps> = ({
   variant = "body",
   style,
   ...props
@@ -18,3 +18,5 @@ export const Typography = ({
     />
   );
 };
+
+export default Typography;
